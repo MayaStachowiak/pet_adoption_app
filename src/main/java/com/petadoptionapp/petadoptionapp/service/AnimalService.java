@@ -3,14 +3,16 @@ package com.petadoptionapp.petadoptionapp.service;
 import com.petadoptionapp.petadoptionapp.bean.dao.Animal;
 import com.petadoptionapp.petadoptionapp.repository.AnimalRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AnimalService {
 
-    private AnimalRepository animalRepository;
+    private final AnimalRepository animalRepository;
 
     public Animal save(Animal animal) {
         return animalRepository.save(animal);

@@ -3,14 +3,16 @@ package com.petadoptionapp.petadoptionapp.service;
 import com.petadoptionapp.petadoptionapp.bean.dao.User;
 import com.petadoptionapp.petadoptionapp.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public User save(User user) {
         return userRepository.save(user);

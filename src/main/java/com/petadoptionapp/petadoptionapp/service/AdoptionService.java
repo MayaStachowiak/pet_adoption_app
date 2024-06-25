@@ -3,14 +3,16 @@ package com.petadoptionapp.petadoptionapp.service;
 import com.petadoptionapp.petadoptionapp.bean.dao.Adoption;
 import com.petadoptionapp.petadoptionapp.repository.AdoptionRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AdoptionService {
 
-    private AdoptionRepository adoptionRepository;
+    private final AdoptionRepository adoptionRepository;
 
     public Adoption save(Adoption adoption) {
         return adoptionRepository.save(adoption);

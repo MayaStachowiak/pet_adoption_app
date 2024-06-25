@@ -3,14 +3,16 @@ package com.petadoptionapp.petadoptionapp.service;
 import com.petadoptionapp.petadoptionapp.bean.dao.Preference;
 import com.petadoptionapp.petadoptionapp.repository.PreferenceRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class PreferenceService {
 
-    private PreferenceRepository preferenceRepository;
+    private final PreferenceRepository preferenceRepository;
 
     public Preference save(Preference preference) {
         return preferenceRepository.save(preference);
