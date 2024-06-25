@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +31,7 @@ public class UserService {
         return userRepository.findAll(PageRequest.of(page, size));
     }
 
+    @Transactional
     public User updateById(User user, Long id) {
         User userDb = getUserById(id);
         userDb.setFirstName(user.getFirstName());
