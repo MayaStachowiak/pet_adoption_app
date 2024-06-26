@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -34,13 +36,13 @@ public class UserService {
     @Transactional
     public User updateById(User user, Long id) {
         User userDb = getUserById(id);
-        userDb.setFirstName(user.getFirstName());
-        userDb.setLastName(user.getLastName());
-        userDb.setEmail(user.getEmail());
-        userDb.setPhoneNumber(user.getPhoneNumber());
-        userDb.setPassword(user.getPassword());
-        userDb.setAdoptions(user.getAdoptions());
-        userDb.setPreferences(user.getPreferences());
+        Optional.ofNullable(user.getFirstName()).ifPresent(userDb::setFirstName);
+        Optional.ofNullable(user.getLastName()).ifPresent(userDb::setLastName);
+        Optional.ofNullable(user.getEmail()).ifPresent(userDb::setEmail);
+        Optional.ofNullable(user.getPhoneNumber()).ifPresent(userDb::setPhoneNumber);
+        Optional.ofNullable(user.getPassword()).ifPresent(userDb::setPassword);
+        Optional.ofNullable(user.getAdoptions()).ifPresent(userDb::setAdoptions);
+        Optional.ofNullable(user.getPreferences()).ifPresent(userDb::setPreferences);
         // notifications todo
         return userDb;
     }
