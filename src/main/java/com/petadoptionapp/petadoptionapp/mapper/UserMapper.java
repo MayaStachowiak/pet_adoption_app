@@ -15,6 +15,8 @@ public interface UserMapper {
     @Mapping(source = "email", target = "email")
     @Mapping(source = "phoneNumber", target = "phoneNumber")
     @Mapping(source = "password", target = "password")
+    @Mapping(target = "adoptions", ignore = true)
+    @Mapping(target = "preferences", ignore = true)
     User map(UserDto userDto);
 
     @Mapping(source = "id", target = "id")
@@ -23,6 +25,8 @@ public interface UserMapper {
     @Mapping(source = "email", target = "email")
     @Mapping(source = "phoneNumber", target = "phoneNumber")
     @Mapping(target = "password", ignore = true)
+    @Mapping(target = "adoptions", ignore = true)
+    @Mapping(target = "preferences", ignore = true)
     UserDto map(User user);
 
 }
