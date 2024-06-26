@@ -1,0 +1,640 @@
+openapi: 3.0.1
+info:
+  title: Pet Adoption API
+  description: API for managing pet adoptions, animals, preferences, and users.
+  version: 1.0.0
+paths:
+
+
+
+  /users:
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Created user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+    get:
+      summary: Get a page of users
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: true
+          description: Page number
+        - in: query
+          name: size
+          schema:
+            type: integer
+          required: true
+          description: Page size
+      responses:
+        '200':
+          description: A page of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+  /users/{id}:
+    get:
+      summary: Get a user by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: User ID
+      responses:
+        '200':
+          description: A user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User not found
+
+    put:
+      summary: Update a user by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: User ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User not found
+
+    delete:
+      summary: Delete a user by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: User ID
+      responses:
+        '204':
+          description: No content
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User not found
+
+
+
+
+  /animals:
+    get:
+      summary: Get a page of animals
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: true
+          description: Page number
+        - in: query
+          name: size
+          schema:
+            type: integer
+          required: true
+          description: Page size
+      responses:
+        '200':
+          description: A page of animals
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Animal'
+    post:
+      summary: Create a new animal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Animal'
+      responses:
+        '200':
+          description: Created animal
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  animal:
+                    $ref: '#/components/schemas/Animal'
+
+  /animals/{id}:
+    get:
+      summary: Get an animal by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Animal ID
+      responses:
+        '200':
+          description: An animal
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  animal:
+                    $ref: '#/components/schemas/Animal'
+        '404':
+          description: Animal not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Animal not found
+
+    put:
+      summary: Update an animal by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Animal ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Animal'
+      responses:
+        '200':
+          description: Updated animal
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  animal:
+                    $ref: '#/components/schemas/Animal'
+        '404':
+          description: Animal not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Animal not found
+
+    delete:
+      summary: Delete an animal by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Animal ID
+      responses:
+        '204':
+          description: No content
+        '404':
+          description: Animal not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Animal not found
+
+
+
+
+
+  /adoptions:
+    get:
+      summary: Get a page of adoptions
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: true
+          description: Page number
+        - in: query
+          name: size
+          schema:
+            type: integer
+          required: true
+          description: Page size
+      responses:
+        '200':
+          description: A page of adoptions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Adoption'
+    post:
+      summary: Create a new adoption
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Adoption'
+      responses:
+        '200':
+          description: Created adoption
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  adoption:
+                    $ref: '#/components/schemas/Adoption'
+
+  /adoptions/{id}:
+    get:
+      summary: Get an adoption by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Adoption ID
+      responses:
+        '200':
+          description: An adoption
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  adoption:
+                    $ref: '#/components/schemas/Adoption'
+        '404':
+          description: Adoption not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Adoption not found
+
+    put:
+      summary: Update an adoption by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Adoption ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Adoption'
+      responses:
+        '200':
+          description: Updated adoption
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  adoption:
+                    $ref: '#/components/schemas/Adoption'
+        '404':
+          description: Adoption not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Adoption not found
+
+    delete:
+      summary: Delete an adoption by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Adoption ID
+      responses:
+        '204':
+          description: No content
+        '404':
+          description: Adoption not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Adoption not found
+
+
+
+
+
+
+  /preferences:
+    get:
+      summary: Get a page of preferences
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: true
+          description: Page number
+        - in: query
+          name: size
+          schema:
+            type: integer
+          required: true
+          description: Page size
+      responses:
+        '200':
+          description: A page of preferences
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Preference'
+    post:
+      summary: Create a new preference
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Preference'
+      responses:
+        '200':
+          description: Created preference
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  preference:
+                    $ref: '#/components/schemas/Preference'
+
+  /preferences/{id}:
+    get:
+      summary: Get a preference by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Preference ID
+      responses:
+        '200':
+          description: A preference
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  preference:
+                    $ref: '#/components/schemas/Preference'
+        '404':
+          description: Preference not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Preference not found
+
+    put:
+      summary: Update a preference by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Preference ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Preference'
+      responses:
+        '200':
+          description: Updated preference
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  preference:
+                    $ref: '#/components/schemas/Preference'
+        '404':
+          description: Preference not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Preference not found
+
+    delete:
+      summary: Delete a preference by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Preference ID
+      responses:
+        '204':
+          description: No content
+        '404':
+          description: Preference not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Preference not found
+
+components:
+  schemas:
+    Adoption:
+      type: object
+      properties:
+        id:
+          type: integer
+        user:
+          $ref: '#/components/schemas/User'
+        animal:
+          $ref: '#/components/schemas/Animal'
+        adoptionDate:
+          type: string
+          format: date
+    Animal:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+        name:
+          type: string
+        age:
+          type: integer
+        color:
+          type: string
+        status:
+          type: string
+        shortDescription:
+          type: string
+        adoptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Adoption'
+        preferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/Preference'
+    Preference:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+        color:
+          type: string
+        minAge:
+          type: integer
+        maxAge:
+          type: integer
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        animals:
+          type: array
+          items:
+            $ref: '#/components/schemas/Animal'
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phoneNumber:
+          type: string
+        password:
+          type: string
+        adoptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Adoption'
+        preferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/Preference'
