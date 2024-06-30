@@ -13,13 +13,15 @@ It provides functionalities to handle users, animals, adoptions, and preferences
 
 - **Spring Boot**: Framework for building the application.
 - **Spring Data JPA**: For database operations.
-- **Hibernate**: ORM tool.
-- **MySQL**: Primary database for the application.
-- **Lombok**: To reduce boilerplate code.
-- **MapStruct**: For mapping between entities and DTOs.
+- **Spring Security**: For securing the application with Basic Auth.
+- **OpenAPI 3.0**: Specification for defining the RESTful API of the application.
 - **JUnit 5**: For unit testing.
 - **Mockito**: For mocking in tests.
-- **SpringDoc OpenAPI**: For API documentation.
+- **Hibernate**: ORM tool.
+- **MySQL**: Primary database for the application.
+- **MapStruct**: For mapping between entities and DTOs.
+- **Lombok**: To reduce boilerplate code.
+- **Thymeleaf**: Template engine for rendering dynamic web pages on the server-side.
 
 
 ### Installation
@@ -51,3 +53,7 @@ The application will be available at http://localhost:8080.
 ```sh
 mvn test
 ```
+
+### Error Handling
+
+In the Pet Adoption App, error handling is managed using a Global Exception Handler in Spring Boot. This ensures that the application consistently handles errors and provides meaningful feedback.
