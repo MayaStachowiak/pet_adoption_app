@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Podaj ID Zwierzaka do Usunięcia</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">
+</head>
+<body>
+<div class="container">
+    <h1>Podaj ID Zwierzaka do Usunięcia</h1>
+    <form th:action="@{/web/animals/getAnimalForDelete}" method="get">
+        <div>
+            <label for="id">ID Zwierzaka:</label>
+            <input type="number" id="id" name="id" required>
+        </div>
+        <div>
+            <button type="submit">Usuń Zwierzaka</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

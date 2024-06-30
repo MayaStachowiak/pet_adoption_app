@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista zwierząt</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<div class="container">
+    <h1>Lista zwierząt</h1>
+    <ul>
+        <li th:each="animal : ${animals}">
+            <span th:text="${animal.name}"></span> -
+            <span th:text="${animal.type}"></span> -
+            <span th:text="${animal.age}"></span> -
+            <span th:text="${animal.color}"></span> -
+            <span th:text="${animal.status}"></span> -
+            <span th:text="${animal.shortDescription}"></span>
+        </li>
+    </ul>
+    <button onclick="goToHome()">Wróć do strony głównej</button>
+</div>
+<script>
+    function goToHome() {
+        window.location.href = "/";
+    }
+</script>
+</body>
+</html>

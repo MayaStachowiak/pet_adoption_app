@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Usuń Zwierzaka</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<div class="container">
+    <h1>Usuń Zwierzaka</h1>
+    <p th:text="'Czy na pewno chcesz usunąć zwierzaka o nazwie: ' + ${animal.name}"></p>
+    <form th:action="@{/web/animals/deleteAnimal(id=${animal.id})}" method="post">
+        <div>
+            <button type="submit">Usuń</button>
+        </div>
+    </form>
+    <div>
+        <a th:href="@{/web/animals/showAllAnimals}">Powrót do listy zwierząt</a>
+    </div>
+</div>
+</body>
+</html>

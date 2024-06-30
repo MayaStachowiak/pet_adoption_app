@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Pet Adoption App</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1 th:text="${welcomeMessage}">Adoptuj zwierzaka!</h1>
+    </div>
+
+    <div class="grid-container">
+
+
+            <div class="section" id="userSection">
+                <li>
+                    <a href="#" class="section-title" onmouseover="showSubMenu('userMenu')">Użytkownicy</a>
+                    <div class="section-content">
+                        <ul id="userMenu" style="display:none;">
+                            <li><a class="button" th:href="@{/showAllUsers}">LISTA</a></li>
+                            <li><a class="button" th:href="@{/addUser}">DODAJ</a></li>
+                            <li><a class="button" th:href="@{/updateUser}">ZAKTUALIZUJ</a></li>
+                            <li><a class="button" th:href="@{/deleteUser}">USUŃ</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </div>
+
+            <div class="section" id="animalSection">
+                <li>
+                    <a href="#" class="section-title" onmouseover="showSubMenu('animalMenu')">Zwierzakowa sekcja</a>
+                    <div class="section-content">
+                        <ul id="animalMenu" style="display:none;">
+                            <li><a class="button" th:href="@{web/animals/showAllAnimals}">NASZE MAŁE ZOO!</a></li>
+                            <li><a class="button" th:href="@{web/animals/addAnimal}">DODAJ</a></li>
+                            <li><a class="button" th:href="@{web/animals/getAnimalIdForUpdate}">ZAKTUALIZUJ</a></li>
+                            <li><a class="button" th:href="@{web/animals/getAnimalIdForDelete}">USUŃ</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </div>
+
+
+            <div class="section" id="adoptionSection">
+                <li>
+                    <a href="#" class="section-title" onmouseover="showSubMenu('adoptionMenu')">Adopcje</a>
+                    <div class="section-content">
+                        <ul id="adoptionMenu" style="display:none;">
+                            <li><a class="button" th:href="@{/showAllAdoptions}">LISTA</a></li>
+                            <li><a class="button" th:href="@{/addAdoption}">DODAJ</a></li>
+                            <li><a class="button" th:href="@{/updateAdoption}">ZAKTUALIZUJ</a></li>
+                            <li><a class="button" th:href="@{/deleteAdoption}">USUŃ</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </div>
+
+
+            <div class="section" id="preferenceSection">
+                <li>
+                    <a href="#" class="section-title" onmouseover="showSubMenu('preferenceMenu')">Ulubione</a>
+                    <div class="section-content">
+                        <ul id="preferenceMenu" style="display:none;">
+                            <li><a class="button" th:href="@{/showAllPreferences}">LISTA</a></li>
+                            <li><a class="button" th:href="@{/addPreference}">DODAJ</a></li>
+                            <li><a class="button" th:href="@{/updatePreference}">ZAKTUALIZUJ</a></li>
+                            <li><a class="button" th:href="@{/deletePreference}">USUŃ</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </div>
+
+    </div>
+</div>
+<p th:text="'Tik tak! Czas leci! Zaadoptuj zwierzaka!: ' + ${currentDateTime}"></p>
+
+<script>
+    function showSubMenu(id) {
+        var subMenu = document.getElementById(id);
+        subMenu.style.display = 'block';
+    }
+</script>
+</body>
+</html>
