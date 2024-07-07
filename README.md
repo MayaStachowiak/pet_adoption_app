@@ -57,3 +57,9 @@ mvn test
 ### Error Handling
 
 In the Pet Adoption App, error handling is managed using a Global Exception Handler in Spring Boot. This ensures that the application consistently handles errors and provides meaningful feedback.
+
+![image](https://github.com/MayaStachowiak/pet_adoption_app/assets/107054955/4cc56b4d-4c4d-4d0b-9423-3d8be278ae9f)
+
+![image](https://github.com/MayaStachowiak/pet_adoption_app/assets/107054955/b4bf59af-4be4-4299-9461-28e36ff65454)
+
+
