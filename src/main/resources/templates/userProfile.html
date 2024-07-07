@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Profil Użytkownika</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Profil Użytkownika</h1>
+    </div>
+    <div class="user-info">
+        <p><strong>Nazwa użytkownika:</strong> <span th:text="${user.username}">Nazwa użytkownika</span></p>
+        <p><strong>Imię:</strong> <span th:text="${user.firstName}">Imię</span></p>
+        <p><strong>Nazwisko:</strong> <span th:text="${user.lastName}">Nazwisko</span></p>
+        <p><strong>Email:</strong> <span th:text="${user.email}">Email</span></p>
+        <p><strong>Numer telefonu:</strong> <span th:text="${user.phoneNumber}">Numer telefonu</span></p>
+    </div>
+    <div class="actions">
+        <a th:href="@{/user/web/editProfile}" class="button">Edytuj Profil</a>
+<!--        <a th:href="@{/user/web/favorites}" class="button">Ulubione</a>-->
+    </div>
+</div>
+</body>
+</html>

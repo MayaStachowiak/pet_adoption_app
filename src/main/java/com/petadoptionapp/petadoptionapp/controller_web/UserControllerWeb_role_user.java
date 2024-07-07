@@ -1,6 +1,7 @@
 package com.petadoptionapp.petadoptionapp.controller_web;
 
 
+import com.petadoptionapp.petadoptionapp.bean.dao.Animal;
 import com.petadoptionapp.petadoptionapp.bean.dao.User;
 import com.petadoptionapp.petadoptionapp.service.AnimalService;
 import com.petadoptionapp.petadoptionapp.service.UserService;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -46,18 +49,19 @@ public class UserControllerWeb_role_user {
         return "redirect:/web/user/profile";
     }
 
-    @GetMapping("/favorites")
-    public String showUserFavorites(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        User user = userService.findByUsername(username);
-//        model.addAttribute("favorites", user.getFavorites());
-        return "userFavorites";
-    }
 
     @GetMapping("animals/showAllAnimals")
     public String listAnimals(Model model) {
         model.addAttribute("animals", animalService.getAll());
         return "showAllAnimals";
+    }
+
+    @GetMapping("/favorites")
+    public String showUserFavorites(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Set<Animal> favorites = userService.getUserFavorites(username);
+        model.addAttribute("favorites", favorites);
+        return "userFavorites";
     }
 }

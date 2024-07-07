@@ -1,6 +1,7 @@
 DELETE FROM adoption;
 DELETE FROM user_preference;
 DELETE FROM preference_animal;
+DELETE FROM user_animal;
 DELETE FROM preference;
 DELETE FROM animal;
 DELETE FROM user;
@@ -16,3 +17,6 @@ INSERT INTO animal (id, type, name, age, color, status, short_description) VALUE
 INSERT INTO preference (id, type, color, min_age, max_age) VALUES (1, 'Dog', 'Brown', 1, 5);
 INSERT INTO preference (id, type, color, min_age, max_age) VALUES (2, 'Dog', 'Brown', 1, 5);
 INSERT INTO adoption (id, adoption_date, user_id, animal_id) VALUES (1, '2024-06-25', 1, 1);
+INSERT INTO user_animal (user_id, animal_id) VALUES (3, 1);
+INSERT INTO user_animal (user_id, animal_id) VALUES (3, 3);
+INSERT INTO user_animal (user_id, animal_id) VALUES (3, 5);

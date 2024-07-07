@@ -33,9 +33,11 @@
                 <a href="#" class="section-title" onmouseover="showSubMenu('preferenceMenu')">Ulubione</a>
                 <div class="section-content">
                     <ul id="preferenceMenu" style="display:none;">
-                        <li><a class="button" th:href="@{web/preferences/addPreference}">DODAJ</a></li>
-                        <li><a class="button" th:href="@{web/preferences/getPreferenceIdForUpdate}">ZAKTUALIZUJ</a></li>
-                        <li><a class="button" th:href="@{web/preferences/getPreferenceIdForDelete}">USUŃ</a></li>
+                        <li><a class="button" th:href="@{/user/web/profile}">MOJE DANE</a></li>
+<!--                        <li><a class="button" th:href="@{web/preferences/addPreference}">DODAJ</a></li>-->
+<!--                        <li><a class="button" th:href="@{web/preferences/getPreferenceIdForUpdate}">ZAKTUALIZUJ</a></li>-->
+<!--                        <li><a class="button" th:href="@{web/preferences/getPreferenceIdForDelete}">USUŃ</a></li>-->
+                        <li><a class="button" th:href="@{/user/web/favorites}">MOJE ULUBIONE ZWIERZAKI</a></li>
                     </ul>
                 </div>
             </li>

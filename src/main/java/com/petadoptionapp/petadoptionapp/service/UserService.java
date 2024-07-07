@@ -1,6 +1,8 @@
 package com.petadoptionapp.petadoptionapp.service;
 
+import com.petadoptionapp.petadoptionapp.bean.dao.Animal;
 import com.petadoptionapp.petadoptionapp.bean.dao.User;
+import com.petadoptionapp.petadoptionapp.repository.AnimalRepository;
 import com.petadoptionapp.petadoptionapp.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +19,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final AnimalRepository animalRepository;
 //    private final PasswordEncoder passwordEncoder;
 
     public User save(User user) {
@@ -73,5 +77,12 @@ public class UserService implements UserDetailsService {
 
         GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getRole().toUpperCase());
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Collections.singleton(authority));
+    }
+
+    public Set<Animal> getUserFavorites(String username) {
+        User user = findByUsername(username);
+        System.out.println("LOg " + user);
+        System.out.println("Log 2 " + animalRepository.findFavoriteAnimalsByUserId(user.getId()));
+        return animalRepository.findFavoriteAnimalsByUserId(user.getId());
     }
 }

@@ -27,4 +27,14 @@ public class Adoption {
     @ManyToOne
     @JoinColumn(name = "animal_id", nullable = false)
     private Animal animal;
+
+    @Override
+    public String toString() {
+        return "Adoption{" +
+                "id=" + id +
+                ", adoptionDate=" + adoptionDate +
+                ", animalId=" + (animal != null ? animal.getId() : null) +
+                '}';
+    }
+
 }

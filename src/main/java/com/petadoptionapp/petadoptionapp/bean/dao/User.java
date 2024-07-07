@@ -31,6 +31,14 @@ public class User {
     // todo confirmPassword
     private String role;
 
+    @ManyToMany
+    @JoinTable(
+            name = "user_animal",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "animal_id")
+    )
+    private Set<Animal> favorites;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Adoption> adoptions = new ArrayList<>();
 
@@ -38,9 +46,22 @@ public class User {
     @JoinTable(
             name = "user_preference",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn( name = "preference_id"))
-    private Set<Preference> preferences = new HashSet<>();
+            inverseJoinColumns = @JoinColumn(name = "preference_id"))
+    private Set<Preference> preferences;
 
-    //private List<Notification> notifications = new ArrayList<>();
+//    private List<Notification> notifications = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", role='" + role + '\'' +
+                '}';
+    }
 
 }

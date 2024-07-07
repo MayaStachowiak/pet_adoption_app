@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -45,7 +46,7 @@ public class HomeController {
         String formattedDateTime = LocalDateTime.now().format(formatter);
         model.addAttribute("currentDateTime", formattedDateTime);
         model.addAttribute("welcomeMessage", "Adoptuj zwierzaka!");
-        return " ";
+        return "userMain";
     }
 
     @GetMapping("/register")

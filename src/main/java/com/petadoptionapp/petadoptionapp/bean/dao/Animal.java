@@ -34,9 +34,12 @@ public class Animal {
     private byte[] image;
 
     @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL)
-    private List<Adoption> adoptions = new ArrayList<>();
+    private List<Adoption> adoptions;
 
     @ManyToMany(mappedBy = "animals")
     private Set<Preference> preferences = new HashSet<>();
+
+    @ManyToMany(mappedBy = "favorites")
+    private Set<User> users = new HashSet<>();
 
 }
