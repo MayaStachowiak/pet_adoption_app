@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dodaj preferencje</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<div class="container">
+    <h1>Dodaj preferencje</h1>
+    <form action="#" th:action="@{/web/preferences/addPreference}" th:object="${preference}" method="post">
+        <div>
+            <label for="type">Rasa:</label>
+            <input type="text" id="type" th:field="*{type}" />
+        </div>
+        <div>
+            <label for="color">Kolor:</label>
+            <input type="text" id="color" th:field="*{color}" />
+        </div>
+        <div>
+            <label for="minAge">Minimalny wiek:</label>
+            <input type="number" id="minAge" th:field="*{minAge}" />
+        </div>
+        <div>
+            <label for="maxAge">Maksymalny wiek:</label>
+            <input type="number" id="maxAge" th:field="*{maxAge}" />
+        </div>
+        <div>
+            <button type="submit">Dodaj</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

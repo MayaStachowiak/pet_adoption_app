@@ -1,4 +1,4 @@
-package com.petadoptionapp.petadoptionapp.controller;
+package com.petadoptionapp.petadoptionapp.controller_web;
 
 import com.petadoptionapp.petadoptionapp.bean.dao.Animal;
 import com.petadoptionapp.petadoptionapp.service.AnimalService;
@@ -6,11 +6,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/web/animals")
-public class AnimalControllerWeb { //todo dodać id do wyświetlanej listy, naprawić przycisk w liście, przycisk gohome w update, screen w readme
+public class AnimalControllerWeb { //todo naprawić przycisk w liście, screen w readme
 
     private final AnimalService animalService;
 
@@ -22,8 +25,9 @@ public class AnimalControllerWeb { //todo dodać id do wyświetlanej listy, napr
     }
 
 
-    @PostMapping("/addAnimal")
-    public String addAnimal(@ModelAttribute("animal") Animal animal) {
+    @PostMapping("/addAnimal") //todo obsłuzyc ioexception w AdviceContr
+    public String addAnimal(@ModelAttribute("animal") Animal animal, @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
+        animal.setImage(imageFile.getBytes());
         animalService.save(animal);
         return "redirect:/web/animals/showAllAnimals";
     }
@@ -50,8 +54,16 @@ public class AnimalControllerWeb { //todo dodać id do wyświetlanej listy, napr
     }
 
 
-    @PostMapping("/updateAnimal")
-    public String updateAnimal(@ModelAttribute("animal") Animal animal) {
+    @PostMapping("/updateAnimal") //todo osbluzyć IOExc
+    public String updateAnimal(@ModelAttribute("animal") Animal animal, @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
+
+        if (!imageFile.isEmpty() && !(imageFile.getSize() < 10485760)) { // 10 MB limit todo
+            System.out.println("Jestem tu");
+            animal.setImage(imageFile.getBytes());
+        } else {
+            System.out.println("Za duży plik");
+        }
+
         animalService.save(animal);
         return "redirect:/web/animals/showAllAnimals";
     }
@@ -73,6 +85,13 @@ public class AnimalControllerWeb { //todo dodać id do wyświetlanej listy, napr
     public String deleteAnimal(@RequestParam("id") Long id) {
         animalService.deleteById(id);
         return "redirect:/web/animals/showAllAnimals";
+    }
+
+    @GetMapping("/image/{id}")
+    @ResponseBody
+    public byte[] getImage(@PathVariable Long id) {
+        Animal animal = animalService.getById(id);
+        return animal.getImage();
     }
 
 }

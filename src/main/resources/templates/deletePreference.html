@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Usuń Preferencję</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<div class="container">
+    <h1>Usuń Preferencję</h1>
+    <p th:text="'Czy na pewno chcesz usunąć preferencję o typie: ' + ${preference.type}"></p>
+    <form th:action="@{/web/preferences/deletePreference(id=${preference.id})}" method="post">
+        <div>
+            <button type="submit">Usuń</button>
+        </div>
+    </form>
+    <div>
+        <a th:href="@{/web/preferences/showAllPreferences}">Powrót do listy preferencji</a>
+    </div>
+</div>
+</body>
+</html>

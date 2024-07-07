@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Pet Adoption App</title>
+    <title>próba</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}"/>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
 
@@ -21,10 +21,10 @@
                     <a href="#" class="section-title" onmouseover="showSubMenu('userMenu')">Użytkownicy</a>
                     <div class="section-content">
                         <ul id="userMenu" style="display:none;">
-                            <li><a class="button" th:href="@{/showAllUsers}">LISTA</a></li>
-                            <li><a class="button" th:href="@{/addUser}">DODAJ</a></li>
-                            <li><a class="button" th:href="@{/updateUser}">ZAKTUALIZUJ</a></li>
-                            <li><a class="button" th:href="@{/deleteUser}">USUŃ</a></li>
+                            <li><a class="button" th:href="@{web/users/showAllUsers}">LISTA</a></li>
+                            <li><a class="button" th:href="@{web/users/addUser}">DODAJ</a></li>
+                            <li><a class="button" th:href="@{web/users/getUserIdForUpdate}">ZAKTUALIZUJ</a></li>
+                            <li><a class="button" th:href="@{web/users/getUserIdForDelete}">USUŃ</a></li>
                         </ul>
                     </div>
                 </li>
@@ -50,10 +50,10 @@
                     <a href="#" class="section-title" onmouseover="showSubMenu('adoptionMenu')">Adopcje</a>
                     <div class="section-content">
                         <ul id="adoptionMenu" style="display:none;">
-                            <li><a class="button" th:href="@{/showAllAdoptions}">LISTA</a></li>
-                            <li><a class="button" th:href="@{/addAdoption}">DODAJ</a></li>
-                            <li><a class="button" th:href="@{/updateAdoption}">ZAKTUALIZUJ</a></li>
-                            <li><a class="button" th:href="@{/deleteAdoption}">USUŃ</a></li>
+                            <li><a class="button" th:href="@{web/adoptions/showAllAdoptions}">LISTA</a></li>
+                            <li><a class="button" th:href="@{web/adoptions/addAdoption}">DODAJ</a></li>
+                            <li><a class="button" th:href="@{web/adoptions/getAdoptionIdForUpdate}">ZAKTUALIZUJ</a></li>
+                            <li><a class="button" th:href="@{web/adoptions/getAdoptionIdForDelete}">USUŃ</a></li>
                         </ul>
                     </div>
                 </li>
@@ -65,10 +65,10 @@
                     <a href="#" class="section-title" onmouseover="showSubMenu('preferenceMenu')">Ulubione</a>
                     <div class="section-content">
                         <ul id="preferenceMenu" style="display:none;">
-                            <li><a class="button" th:href="@{/showAllPreferences}">LISTA</a></li>
-                            <li><a class="button" th:href="@{/addPreference}">DODAJ</a></li>
-                            <li><a class="button" th:href="@{/updatePreference}">ZAKTUALIZUJ</a></li>
-                            <li><a class="button" th:href="@{/deletePreference}">USUŃ</a></li>
+                            <li><a class="button" th:href="@{web/preferences/showAllPreferences}">LISTA</a></li>
+                            <li><a class="button" th:href="@{web/preferences/addPreference}">DODAJ</a></li>
+                            <li><a class="button" th:href="@{web/preferences/getPreferenceIdForUpdate}">ZAKTUALIZUJ</a></li>
+                            <li><a class="button" th:href="@{web/preferences/getPreferenceIdForDelete}">USUŃ</a></li>
                         </ul>
                     </div>
                 </li>

@@ -29,6 +29,10 @@ public class Animal {
     private String status;
     private String shortDescription;
 
+    @Lob
+    @Column(name = "image")
+    private byte[] image;
+
     @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL)
     private List<Adoption> adoptions = new ArrayList<>();
 

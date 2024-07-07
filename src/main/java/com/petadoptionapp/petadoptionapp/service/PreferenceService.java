@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PreferenceService {
@@ -41,5 +43,9 @@ public class PreferenceService {
         preferenceDb.setUsers(preference.getUsers());
         preferenceDb.setAnimals(preference.getAnimals());
         return preferenceDb;
+    }
+
+    public List<Preference> getAll() {
+        return preferenceRepository.findAll();
     }
 }

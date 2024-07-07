@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista adopcji</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<div class="container">
+    <h1>Lista adopcji</h1>
+    <ul>
+        <li th:each="adoption : ${adoptions}">
+            <span th:text="${adoption.id}"></span> -
+            <span th:text="${adoption.adoptionDate}"></span> -
+            <span th:text="${adoption.user.firstName} + ' ' + ${adoption.user.lastName}"></span> -
+            <span th:text="${adoption.animal.name}"></span>
+        </li>
+    </ul>
+    <button class="back-button" onclick="goToHome()">Wróć do strony głównej</button>
+</div>
+<script>
+    function goToHome() {
+        window.location.href = "/";
+    }
+</script>
+</body>
+</html>

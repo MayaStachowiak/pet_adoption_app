@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AdoptionService {
@@ -38,6 +40,10 @@ public class AdoptionService {
         adoptionDb.setAnimal(adoption.getAnimal());
         adoptionDb.setAdoptionDate(adoption.getAdoptionDate());
         return adoptionDb;
+    }
+
+    public List<Adoption> getAll() {
+        return adoptionRepository.findAll();
     }
 
 }

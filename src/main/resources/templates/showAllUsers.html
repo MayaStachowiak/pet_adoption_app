@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista użytkowników</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<div class="container">
+    <h1>Lista użytkowników</h1>
+    <ul>
+        <li th:each="user : ${users}">
+            <span th:text="${user.id}"></span> -
+            <span th:text="${user.firstName}"></span> -
+            <span th:text="${user.lastName}"></span> -
+            <span th:text="${user.email}"></span> -
+            <span th:text="${user.phoneNumber}"></span>
+        </li>
+    </ul>
+    <button class="back-button" onclick="goToHome()">Wróć do strony głównej</button>
+</div>
+<script>
+    function goToHome() {
+        window.location.href = "/";
+    }
+</script>
+</body>
+</html>

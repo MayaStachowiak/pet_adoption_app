@@ -5,9 +5,9 @@ DELETE FROM preference;
 DELETE FROM animal;
 DELETE FROM user;
 
-INSERT INTO user (id, first_name, last_name, email, phone_number, password) VALUES (1, 'John', 'Doe', 'john.doe@gmail.com', '677888555', 'password123');
-INSERT INTO user (id, first_name, last_name, email, phone_number, password) VALUES (2, 'Hannah', 'Montana', 'hannah.montana@interia.com', '666333444', 'password321');
-INSERT INTO user (id, first_name, last_name, email, phone_number, password) VALUES (3, 'Zbigniew', 'Nowak', 'zbysiu.nowak@gmail.com', '654333222', 'pass322');
+INSERT INTO user (id, username, first_name, last_name, email, phone_number, password, role) VALUES (1, 'Dżonek', 'John', 'Doe', 'john.doe@gmail.com', '677888555', 'password123','admin' );
+INSERT INTO user (id, username, first_name, last_name, email, phone_number, password, role) VALUES (2, 'Hanusia007', 'Hannah', 'Montana', 'hannah.montana@interia.com', '666333444', 'password321', 'user');
+INSERT INTO user (id, username, first_name, last_name, email, phone_number, password, role) VALUES (3, 'Zbyniu02', 'Zbigniew', 'Nowak', 'zbysiu.nowak@gmail.com', '654333222', 'pass322','user'      );
 INSERT INTO animal (id, type, name, age, color, status, short_description) VALUES (1, 'Dog', 'Buddy', 3, 'Brown', 'Available', 'Friendly dog');
 INSERT INTO animal (id, type, name, age, color, status, short_description) VALUES (2, 'Dog', 'Lily', 1, 'White', 'Available', 'Friendly dog');
 INSERT INTO animal (id, type, name, age, color, status, short_description) VALUES (3, 'Cat', 'Laila', 5, 'Gray', 'Available', 'Very friendly');

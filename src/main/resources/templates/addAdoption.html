@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dodaj adopcję</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<div class="container">
+    <h1>Dodaj adopcję</h1>
+    <form action="#" th:action="@{/web/adoptions/addAdoption}" th:object="${adoption}" method="post">
+        <div>
+            <label for="adoptionDate">Data adopcji:</label>
+            <input type="date" id="adoptionDate" th:field="*{adoptionDate}"/>
+        </div>
+        <div>
+            <label for="user">Użytkownik:</label>
+            <select id="user" th:field="*{user}">
+                <option th:each="user : ${users}" th:value="${user.id}"
+                        th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
+            </select>
+        </div>
+        <div>
+            <label for="animal">Zwierzę:</label>
+            <select id="animal" th:field="*{animal}">
+                <option th:each="animal : ${animals}" th:value="${animal.id}" th:text="${animal.name}"></option>
+            </select>
+        </div>
+        <div>
+            <button type="submit">Dodaj</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

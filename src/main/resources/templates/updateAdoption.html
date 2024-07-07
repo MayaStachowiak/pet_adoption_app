@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Zaktualizuj adopcję</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<div class="container">
+    <h1>Zaktualizuj adopcję</h1>
+    <form action="#" th:action="@{/web/adoptions/updateAdoption}" th:object="${adoption}" method="post">
+        <div>
+            <label for="id">ID adopcji:</label>
+            <input type="number" id="id" th:field="*{id}" readonly/>
+        </div>
+        <div>
+            <label for="adoptionDate">Data adopcji:</label>
+            <input type="date" id="adoptionDate" th:field="*{adoptionDate}" required/>
+        </div>
+        <div>
+            <label for="user">Użytkownik:</label>
+            <input type="text" id="user" th:field="*{user.id}" required/>
+        </div>
+        <div>
+            <label for="animal">Zwierzak:</label>
+            <input type="text" id="animal" th:field="*{animal.id}" required/>
+        </div>
+        <div>
+            <button type="submit">Zaktualizuj</button>
+        </div>
+    </form>
+    <button class="back-button" onclick="goToHome()">Wróć do strony głównej</button>
+</div>
+<script>
+    function goToHome() {
+        window.location.href = "/";
+    }
+</script>
+</body>
+</html>

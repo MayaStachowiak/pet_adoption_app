@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Usuń Użytkownika</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<div class="container">
+    <h1>Usuń Użytkownika</h1>
+    <p th:text="'Czy na pewno chcesz usunąć użytkownika o imieniu: ' + ${user.firstName} + ' ' + ${user.lastName}"></p>
+    <form th:action="@{/web/users/deleteUser(id=${user.id})}" method="post">
+        <div>
+            <button type="submit">Usuń</button>
+        </div>
+    </form>
+    <div>
+        <a th:href="@{/web/users/showAllUsers}">Powrót do listy użytkowników</a>
+    </div>
+</div>
+</body>
+</html>

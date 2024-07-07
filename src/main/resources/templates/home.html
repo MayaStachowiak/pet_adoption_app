@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>próba</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1 th:text="${welcomeMessage}">Adoptuj zwierzaka!</h1>
+    </div>
+
+    <div class="grid-container">
+
+        <nav>
+            <a th:href="@{/register}">Rejestracja</a>
+            <br>
+            <br>
+            <a th:href="@{/login}">Logowanie</a>
+        </nav>
+
+
+        <div class="section" id="animalSection">
+            <li>
+                <a href="#" class="section-title" onmouseover="showSubMenu('animalMenu')">Zwierzakowa sekcja</a>
+                <div class="section-content">
+                    <ul id="animalMenu" style="display:none;">
+                        <li><a class="button" th:href="@{web/animals/showAllAnimals}">NASZE MAŁE ZOO!</a></li>
+                        <li><a class="button" th:href="@{web/animals/addAnimal}">DODAJ</a></li>
+                        <li><a class="button" th:href="@{web/animals/getAnimalIdForUpdate}">ZAKTUALIZUJ</a></li>
+                        <li><a class="button" th:href="@{web/animals/getAnimalIdForDelete}">USUŃ</a></li>
+                    </ul>
+                </div>
+            </li>
+        </div>
+
+
+        <!--  GPT -->
+
+        <div class="container" />
+<!--             style="position: fixed; bottom: 0; right: 0; width: 300px; height: 400px; border: 1px solid #ccc; background: #fff; padding: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">-->
+            <h3>Chat with GPT</h3>
+            <div id="chat-window" style="height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
+                <div id="chat-log"></div>
+            </div>
+            <input type="text" id="chat-input" placeholder="Type your message here..."
+                   style="width: calc(100% - 60px);">
+            <button id="send-button" style="width: 50px;">Send</button>
+        </div>
+
+
+    </div>
+</div>
+<p th:text="'Tik tak! Czas leci! Zaadoptuj zwierzaka!: ' + ${currentDateTime}"></p>
+
+<script>
+    function showSubMenu(id) {
+        var subMenu = document.getElementById(id);
+        subMenu.style.display = 'block';
+    }
+
+    $(document).ready(function () {
+        $('#send-button').click(function () {
+            const prompt = $('#chat-input').val();
+            $.post('/chat', {prompt: prompt}, function (response) {
+                $('#chat-log').append('<div>User: ' + prompt + '</div>');
+                $('#chat-log').append('<div>GPT: ' + response + '</div>');
+                $('#chat-input').val('');
+                $('#chat-window').scrollTop($('#chat-window')[0].scrollHeight);
+            });
+        });
+    });
+
+
+</script>
+</body>
+</html>

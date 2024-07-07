@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista Preferencji</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<div class="container">
+    <h1>Lista Preferencji</h1>
+    <ul>
+        <li th:each="preference : ${preferences}">
+            <span th:text="${preference.id}"></span> -
+            <span th:text="${preference.type}"></span> -
+            <span th:text="${preference.color}"></span> -
+            <span th:text="${preference.minAge}"></span> -
+            <span th:text="${preference.maxAge}"></span>
+        </li>
+    </ul>
+    <button class="back-button" onclick="goToHome()">Wróć do strony głównej</button>
+</div>
+<script>
+    function goToHome() {
+        window.location.href = "/";
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Usuń Adopcję</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<div class="container">
+    <h1>Usuń Adopcję</h1>
+    <p th:text="'Czy na pewno chcesz usunąć adopcję o ID: ' + ${adoption.id}"></p>
+    <form th:action="@{/web/adoptions/deleteAdoption(id=${adoption.id})}" method="post">
+        <div>
+            <button type="submit">Usuń</button>
+        </div>
+    </form>
+    <div>
+        <a th:href="@{/web/adoptions/showAllAdoptions}">Powrót do listy adopcji</a>
+    </div>
+</div>
+</body>
+</html>

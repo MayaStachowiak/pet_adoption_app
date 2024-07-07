@@ -620,6 +620,8 @@ components:
       properties:
         id:
           type: integer
+        username:
+          type: string
         firstName:
           type: string
         lastName:
@@ -629,6 +631,8 @@ components:
         phoneNumber:
           type: string
         password:
+          type: string
+        role:
           type: string
         adoptions:
           type: array

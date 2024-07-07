@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Zaktualizuj preferencje</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<div class="container">
+    <h1>Zaktualizuj preferencje</h1>
+    <form action="#" th:action="@{/web/preferences/updatePreference}" th:object="${preference}" method="post">
+        <div>
+            <label for="id">ID preferencji:</label>
+            <input type="number" id="id" th:field="*{id}" readonly/>
+        </div>
+        <div>
+            <label for="type">Typ:</label>
+            <input type="text" id="type" th:field="*{type}" required/>
+        </div>
+        <div>
+            <label for="color">Kolor:</label>
+            <input type="text" id="color" th:field="*{color}" required/>
+        </div>
+        <div>
+            <label for="minAge">Minimalny wiek:</label>
+            <input type="number" id="minAge" th:field="*{minAge}" required/>
+        </div>
+        <div>
+            <label for="maxAge">Maksymalny wiek:</label>
+            <input type="number" id="maxAge" th:field="*{maxAge}" required/>
+        </div>
+        <div>
+            <button type="submit">Zaktualizuj</button>
+        </div>
+    </form>
+    <button class="back-button" onclick="goToHome()">Wróć do strony głównej</button>
+</div>
+<script>
+    function goToHome() {
+        window.location.href = "/";
+    }
+</script>
+</body>
+</html>
