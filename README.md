@@ -2,6 +2,8 @@
 
 Pet Adoption App is a Spring Boot-based application designed to manage pet adoptions.
 It provides functionalities to handle users, animals, adoptions, and preferences. 
+The application features a login panel with different views for regular users and administrators. 
+
 ## Features
 
 - **User Management**: CRUD operations for users.
@@ -15,13 +17,15 @@ It provides functionalities to handle users, animals, adoptions, and preferences
 - **Spring Data JPA**: For database operations.
 - **Spring Security**: For securing the application with Basic Auth.
 - **OpenAPI 3.0**: Specification for defining the RESTful API of the application.
-- **JUnit 5**: For unit testing.
-- **Mockito**: For mocking in tests.
 - **Hibernate**: ORM tool.
 - **MySQL**: Primary database for the application.
 - **MapStruct**: For mapping between entities and DTOs.
 - **Lombok**: To reduce boilerplate code.
 - **Thymeleaf**: Template engine for rendering dynamic web pages on the server-side.
+- **Docker**: Used for running integration tests in isolated containers, ensuring a consistent testing environment.
+- **JUnit 5**: For unit testing.
+- **Mockito**: For mocking in tests.
+- **OpenAI GPT**: For implementing chat functionality.
 
 
 ### Installation
@@ -57,6 +61,11 @@ mvn test
 ### Error Handling
 
 In the Pet Adoption App, error handling is managed using a Global Exception Handler in Spring Boot. This ensures that the application consistently handles errors and provides meaningful feedback.
+
+
+----------------------------------------------------------------------------------------------
+
+
 
 ![image](https://github.com/MayaStachowiak/pet_adoption_app/assets/107054955/4cc56b4d-4c4d-4d0b-9423-3d8be278ae9f)
 
