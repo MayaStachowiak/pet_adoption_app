@@ -38,15 +38,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
+                                .requestMatchers("/api/**").permitAll()
                                 .requestMatchers("/", "/home", "/login", "/resources/**", "/register", "/css/**", "/public/**",
-                                        "web/preferences/addPreference", "web/preferences/getPreferenceIdForUpdate",
-                                        "web/preferences/getPreferenceIdForDelete", "web/animals/showAllAnimals").permitAll()
+                        "web/preferences/addPreference", "web/preferences/getPreferenceIdForUpdate",
+                        "web/preferences/getPreferenceIdForDelete", "web/animals/showAllAnimals").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/user/**").hasRole("USER")
                                 .anyRequest().authenticated()
                 )
+
                 .formLogin(form -> form
                                 .loginPage("/login")
                                 .defaultSuccessUrl("/default", true)

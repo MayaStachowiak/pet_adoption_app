@@ -1,0 +1,6 @@
+{
+  "type": "Dog",
+  "color": "Black",
+  "minAge": 1,
+  "maxAge": 5
+}

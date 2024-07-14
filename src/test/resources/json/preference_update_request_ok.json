@@ -1,0 +1,6 @@
+{
+  "type": "Cat",
+  "color": "White",
+  "minAge": 2,
+  "maxAge": 6
+}

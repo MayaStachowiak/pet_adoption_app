@@ -1,6 +1,6 @@
 package com.petadoptionapp.petadoptionapp.controller;
 
-
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,6 +14,7 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -21,8 +22,9 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.shaded.org.apache.commons.io.IOUtils;
 import org.testcontainers.utility.DockerImageName;
 
+import java.nio.charset.StandardCharsets;
+
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Testcontainers
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc(addFilters = false)
-public class UserControllerTest {
+public class AdoptionControllerTest {
 
     @Container
     private static final MySQLContainer<?> MY_SQL_CONTAINER = new MySQLContainer<>(DockerImageName.parse("mysql:8.0"));
@@ -51,126 +53,132 @@ public class UserControllerTest {
         dynamicPropertyRegistry.add("spring.sql.init.mode", () -> "never");
     }
 
+    @BeforeEach
+    public void createUserAndANimal() throws Exception {
+        // Create User
+        Resource userResource = resourceLoader.getResource("classpath:json/user_create_request_ok.json");
+        String userRequestBody = IOUtils.toString(userResource.getInputStream(), StandardCharsets.UTF_8);
 
-    @Test
-    void testBasicAuthenticate() throws Exception {
-        mockMvc.perform(get("/").with(httpBasic("user", "haslo123")));
+        MvcResult userResult = mockMvc.perform(post("/api/users")
+                        .content(userRequestBody)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String userResponseBody = userResult.getResponse().getContentAsString();
+        System.out.println("User Response Body: " + userResponseBody);
+
+
+        // Create Animal
+        Resource animalResource = resourceLoader.getResource("classpath:json/animal_create_request_ok.json");
+        String animalRequestBody = IOUtils.toString(animalResource.getInputStream(), StandardCharsets.UTF_8);
+
+        MvcResult animalResult = mockMvc.perform(post("/api/animals")
+                        .content(animalRequestBody)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String animalResponseBody = animalResult.getResponse().getContentAsString();
+        System.out.println("Animal Response Body: " + animalResponseBody);
     }
 
 
     @Test
     @Transactional
-    void shouldSaveUser() throws Exception {
-        Resource resource = resourceLoader.getResource("classpath:json/user_create_request_ok.json");
-        String requestBody = IOUtils.toString(resource.getInputStream());
+    void shouldSaveAdoption() throws Exception {
+        Resource resource = resourceLoader.getResource("classpath:json/adoption_create_request_ok.json");
+        String requestBody = IOUtils.toString(resource.getInputStream(), StandardCharsets.UTF_8);
+        System.out.println(requestBody);
 
-        mockMvc.perform(post("/api/users")
+        MvcResult mvcResult = mockMvc.perform(post("/api/adoptions")
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.user.username").value("Adam007"))
-                .andExpect(jsonPath("$.user.firstName").value("Adam"))
-                .andExpect(jsonPath("$.user.lastName").value("Mickiewicz"))
-                .andExpect(jsonPath("$.user.email").value("adasiek@gmail.com"))
-                .andExpect(jsonPath("$.user.phoneNumber").value("587856999"))
-                .andExpect(jsonPath("$.user.password").doesNotExist())
-                .andExpect(jsonPath("$.user.role").doesNotExist())
-                .andExpect(jsonPath("$.user.id").exists());
-    }
+                .andExpect(jsonPath("$.adoption.adoptionDate").value("2024-07-10"))
+                .andExpect(jsonPath("$.adoption.user.id").value(1))
+                .andExpect(jsonPath("$.adoption.animal.id").value(1))
+                .andReturn();
 
+        String responseBody = mvcResult.getResponse().getContentAsString();
+        System.out.println("Response Body: " + responseBody);
+    }
 
     @Test
     @Transactional
-    void shouldGetUserById() throws Exception {
-        Resource resource = resourceLoader.getResource("classpath:json/user_create_request_ok.json");
+    void shouldGetAdoptionById() throws Exception {
+        Resource resource = resourceLoader.getResource("classpath:json/adoption_create_request_ok.json");
         String requestBody = IOUtils.toString(resource.getInputStream());
 
-        //zapisanie usera
-        mockMvc.perform(post("/api/users")
+        mockMvc.perform(post("/api/adoptions")
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        //sprawdzenie
-        mockMvc.perform(get("/api/users/1")
+        mockMvc.perform(get("/api/adoptions/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value("Adam007"))
-                .andExpect(jsonPath("$.firstName").value("Adam"))
-                .andExpect(jsonPath("$.lastName").value("Mickiewicz"))
-                .andExpect(jsonPath("$.email").value("adasiek@gmail.com"))
-                .andExpect(jsonPath("$.phoneNumber").value("587856999"))
-                .andExpect(jsonPath("$.password").doesNotExist())
-                .andExpect(jsonPath("$.role").doesNotExist())
-                .andExpect(jsonPath("$.id").exists());
+                .andExpect(jsonPath("$.adoptionDate").value("2024-07-10"))
+                .andExpect(jsonPath("$.user.id").value(1))
+                .andExpect(jsonPath("$.animal.id").value(1));
     }
+
 
     @Test
     @Transactional
-    void shouldReturnNotFoundForNonExistentUser() throws Exception {
-        mockMvc.perform(get("/api/users/999")
+    void shouldReturnNotFoundForNonExistentAdoption() throws Exception {
+        mockMvc.perform(get("/api/adoptions/999")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 
+
     @Test
     @Transactional
-    void shouldDeleteUserById() throws Exception {
-        Resource resource = resourceLoader.getResource("classpath:json/user_create_request_ok.json");
+    void shouldDeleteAdoptionById() throws Exception {
+        Resource resource = resourceLoader.getResource("classpath:json/adoption_create_request_ok.json");
         String requestBody = IOUtils.toString(resource.getInputStream());
 
-        // zapisanie usra
-        mockMvc.perform(post("/api/users")
+        mockMvc.perform(post("/api/adoptions")
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        // skasowanie
-        mockMvc.perform(delete("/api/users/1")
+        mockMvc.perform(delete("/api/adoptions/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
 
-
     @Test
     @Transactional
     @Sql("classpath:sql/clear_data.sql")
-    void shouldUpdateUserById() throws Exception {
-        Resource createResource = resourceLoader.getResource("classpath:json/user_create_request_ok.json");
+    void shouldUpdateAdoptionById() throws Exception {
+        Resource createResource = resourceLoader.getResource("classpath:json/adoption_create_request_ok.json");
         String createRequestBody = IOUtils.toString(createResource.getInputStream());
 
-        // zapisanie usera
-        mockMvc.perform(post("/api/users")
+        mockMvc.perform(post("/api/adoptions")
                         .content(createRequestBody)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        Resource updateResource = resourceLoader.getResource("classpath:json/user_update_request_ok.json");
+        Resource updateResource = resourceLoader.getResource("classpath:json/adoption_update_request_ok.json");
         String updateRequestBody = IOUtils.toString(updateResource.getInputStream());
 
-        // update, sprawdzenie
-        mockMvc.perform(patch("/api/users/5")
+        mockMvc.perform(patch("/api/adoptions/1")
                         .content(updateRequestBody)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value("AdamUpdated"))
-                .andExpect(jsonPath("$.firstName").value("Adam"))
-                .andExpect(jsonPath("$.lastName").value("Mickiewicz"))
-                .andExpect(jsonPath("$.email").value("adasiek_updated@gmail.com"))
-                .andExpect(jsonPath("$.phoneNumber").value("587856999"))
-                .andExpect(jsonPath("$.password").doesNotExist())
-                .andExpect(jsonPath("$.role").doesNotExist())
-                .andExpect(jsonPath("$.id").exists());
+                .andExpect(jsonPath("$.adoptionDate").value("2024-07-11"))
+                .andExpect(jsonPath("$.user.id").value(2))
+                .andExpect(jsonPath("$.animal.id").value(1));
     }
-
 
     @Test
     @Transactional
-    @Sql("classpath:sql/user_data.sql")
-    void shouldGetUserPage() throws Exception {
-
-        mockMvc.perform(get("/api/users/all")
+    @Sql("classpath:sql/adoption_data.sql")
+    void shouldGetAdoptionPage() throws Exception {
+        mockMvc.perform(get("/api/adoptions/all")
                         .queryParam("page", "0")
                         .queryParam("size", "2"))
                 .andExpect(status().isOk())
@@ -179,16 +187,3 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.content", hasSize(2)));
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

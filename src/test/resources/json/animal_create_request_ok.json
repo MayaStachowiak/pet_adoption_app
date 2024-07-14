@@ -1,0 +1,8 @@
+{
+  "name": "Bella",
+  "type": "Dog",
+  "age": 3,
+  "color": "Brown",
+  "status": "Available",
+  "shortDescription": "Friendly dog"
+}

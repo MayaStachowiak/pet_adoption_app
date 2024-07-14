@@ -22,7 +22,6 @@ import org.testcontainers.shaded.org.apache.commons.io.IOUtils;
 import org.testcontainers.utility.DockerImageName;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Testcontainers
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc(addFilters = false)
-public class UserControllerTest {
+public class AnimalControllerTest {
 
     @Container
     private static final MySQLContainer<?> MY_SQL_CONTAINER = new MySQLContainer<>(DockerImageName.parse("mysql:8.0"));
@@ -53,81 +52,73 @@ public class UserControllerTest {
 
 
     @Test
-    void testBasicAuthenticate() throws Exception {
-        mockMvc.perform(get("/").with(httpBasic("user", "haslo123")));
-    }
-
-
-    @Test
     @Transactional
-    void shouldSaveUser() throws Exception {
-        Resource resource = resourceLoader.getResource("classpath:json/user_create_request_ok.json");
+    void shouldSaveAnimal() throws Exception {
+        Resource resource = resourceLoader.getResource("classpath:json/animal_create_request_ok.json");
         String requestBody = IOUtils.toString(resource.getInputStream());
 
-        mockMvc.perform(post("/api/users")
+        mockMvc.perform(post("/api/animals")
                         .content(requestBody)
-                        .contentType(MediaType.APPLICATION_JSON)
-                )
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.user.username").value("Adam007"))
-                .andExpect(jsonPath("$.user.firstName").value("Adam"))
-                .andExpect(jsonPath("$.user.lastName").value("Mickiewicz"))
-                .andExpect(jsonPath("$.user.email").value("adasiek@gmail.com"))
-                .andExpect(jsonPath("$.user.phoneNumber").value("587856999"))
-                .andExpect(jsonPath("$.user.password").doesNotExist())
-                .andExpect(jsonPath("$.user.role").doesNotExist())
-                .andExpect(jsonPath("$.user.id").exists());
+                .andExpect(jsonPath("$.animal.name").value("Bella"))
+                .andExpect(jsonPath("$.animal.age").value(3))
+                .andExpect(jsonPath("$.animal.type").value("Dog"))
+                .andExpect(jsonPath("$.animal.color").value("Brown"))
+                .andExpect(jsonPath("$.animal.status").value("Available"))
+                .andExpect(jsonPath("$.animal.shortDescription").value("Friendly dog"))
+                .andExpect(jsonPath("$.animal.id").exists());
     }
 
 
     @Test
     @Transactional
-    void shouldGetUserById() throws Exception {
-        Resource resource = resourceLoader.getResource("classpath:json/user_create_request_ok.json");
+    void shouldGetAnimalById() throws Exception {
+        Resource resource = resourceLoader.getResource("classpath:json/animal_create_request_ok.json");
         String requestBody = IOUtils.toString(resource.getInputStream());
 
-        //zapisanie usera
-        mockMvc.perform(post("/api/users")
+        // Save the animal
+        mockMvc.perform(post("/api/animals")
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        //sprawdzenie
-        mockMvc.perform(get("/api/users/1")
+        // Get the animal by ID
+        mockMvc.perform(get("/api/animals/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value("Adam007"))
-                .andExpect(jsonPath("$.firstName").value("Adam"))
-                .andExpect(jsonPath("$.lastName").value("Mickiewicz"))
-                .andExpect(jsonPath("$.email").value("adasiek@gmail.com"))
-                .andExpect(jsonPath("$.phoneNumber").value("587856999"))
-                .andExpect(jsonPath("$.password").doesNotExist())
-                .andExpect(jsonPath("$.role").doesNotExist())
+                .andExpect(jsonPath("$.name").value("Bella"))
+                .andExpect(jsonPath("$.age").value(3))
+                .andExpect(jsonPath("$.type").value("Dog"))
+                .andExpect(jsonPath("$.color").value("Brown"))
+                .andExpect(jsonPath("$.status").value("Available"))
+                .andExpect(jsonPath("$.shortDescription").value("Friendly dog"))
                 .andExpect(jsonPath("$.id").exists());
     }
 
     @Test
     @Transactional
-    void shouldReturnNotFoundForNonExistentUser() throws Exception {
-        mockMvc.perform(get("/api/users/999")
+    void shouldReturnNotFoundForNonExistentAnimal() throws Exception {
+        mockMvc.perform(get("/api/animals/999")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 
+
     @Test
     @Transactional
-    void shouldDeleteUserById() throws Exception {
-        Resource resource = resourceLoader.getResource("classpath:json/user_create_request_ok.json");
+    void shouldDeleteAnimalById() throws Exception {
+        Resource resource = resourceLoader.getResource("classpath:json/animal_create_request_ok.json");
         String requestBody = IOUtils.toString(resource.getInputStream());
 
-        // zapisanie usra
-        mockMvc.perform(post("/api/users")
+        // Save the animal
+        mockMvc.perform(post("/api/animals")
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        // skasowanie
-        mockMvc.perform(delete("/api/users/1")
+        // Delete the animal
+        mockMvc.perform(delete("/api/animals/7")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
@@ -136,41 +127,39 @@ public class UserControllerTest {
     @Test
     @Transactional
     @Sql("classpath:sql/clear_data.sql")
-    void shouldUpdateUserById() throws Exception {
-        Resource createResource = resourceLoader.getResource("classpath:json/user_create_request_ok.json");
+    void shouldUpdateAnimalById() throws Exception {
+        Resource createResource = resourceLoader.getResource("classpath:json/animal_create_request_ok.json");
         String createRequestBody = IOUtils.toString(createResource.getInputStream());
 
-        // zapisanie usera
-        mockMvc.perform(post("/api/users")
+        // Save the animal
+        mockMvc.perform(post("/api/animals")
                         .content(createRequestBody)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        Resource updateResource = resourceLoader.getResource("classpath:json/user_update_request_ok.json");
+        Resource updateResource = resourceLoader.getResource("classpath:json/animal_update_request_ok.json");
         String updateRequestBody = IOUtils.toString(updateResource.getInputStream());
 
-        // update, sprawdzenie
-        mockMvc.perform(patch("/api/users/5")
+        // Update the animal
+        mockMvc.perform(patch("/api/animals/1")
                         .content(updateRequestBody)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value("AdamUpdated"))
-                .andExpect(jsonPath("$.firstName").value("Adam"))
-                .andExpect(jsonPath("$.lastName").value("Mickiewicz"))
-                .andExpect(jsonPath("$.email").value("adasiek_updated@gmail.com"))
-                .andExpect(jsonPath("$.phoneNumber").value("587856999"))
-                .andExpect(jsonPath("$.password").doesNotExist())
-                .andExpect(jsonPath("$.role").doesNotExist())
+                .andExpect(jsonPath("$.name").value("BellaUpdated"))
+                .andExpect(jsonPath("$.age").value(4))
+                .andExpect(jsonPath("$.type").value("Dog"))
+                .andExpect(jsonPath("$.color").value("Black"))
+                .andExpect(jsonPath("$.status").value("Adopted"))
+                .andExpect(jsonPath("$.shortDescription").value("Friendly and energetic dog"))
                 .andExpect(jsonPath("$.id").exists());
     }
 
 
     @Test
     @Transactional
-    @Sql("classpath:sql/user_data.sql")
-    void shouldGetUserPage() throws Exception {
-
-        mockMvc.perform(get("/api/users/all")
+    @Sql("classpath:sql/animal_data.sql")
+    void shouldGetAnimalPage() throws Exception {
+        mockMvc.perform(get("/api/animals/all")
                         .queryParam("page", "0")
                         .queryParam("size", "2"))
                 .andExpect(status().isOk())
@@ -178,17 +167,6 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.size").value("2"))
                 .andExpect(jsonPath("$.content", hasSize(2)));
     }
+
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
