@@ -8,12 +8,10 @@ import com.petadoptionapp.petadoptionapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
@@ -43,10 +41,40 @@ public class UserControllerWeb_role_user {
         return "editUserProfile";
     }
 
+
+
+//    @PostMapping("/editProfile")
+//    public String editUserProfile(@ModelAttribute("user") User user) {
+//        userService.save(user);
+//        return "redirect:/web/user/profile";
+//    }
+
+    @GetMapping("/editUser")
+    public String editUser(Model model, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        User user = userService.findByUsername(userDetails.getUsername());
+        model.addAttribute("user", user);
+        return "editUserProfileForUserRole";
+    }
+
     @PostMapping("/editProfile")
-    public String editUserProfile(@ModelAttribute("user") User user) {
-        userService.save(user);
-        return "redirect:/web/user/profile";
+    public String updateUser(User user, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        User existingUser = userService.findByUsername(userDetails.getUsername());
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastName(user.getLastName());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setPassword(user.getPassword());
+        existingUser.setPhoneNumber(user.getPhoneNumber());
+
+        System.out.println("Wprowadzono zmiany");
+        userService.save(existingUser);
+        return "redirect:/user/web/confirmation";
+    }
+
+    @GetMapping("/confirmation")
+    public String showConfirmationPage() {
+        return "confirmation";
     }
 
 
@@ -63,5 +91,15 @@ public class UserControllerWeb_role_user {
         Set<Animal> favorites = userService.getUserFavorites(username);
         model.addAttribute("favorites", favorites);
         return "userFavorites";
+    }
+
+    @PostMapping("/addToFavorites/{animalId}")
+    @ResponseBody
+    public String addToFavorites(@PathVariable Long animalId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        userService.addAnimalToFavorites(username, animalId);
+        System.out.println("Dodaj do ulubionych kontroler");
+        return "Dodano do ulubionych!";
     }
 }

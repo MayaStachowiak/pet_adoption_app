@@ -75,8 +75,11 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getRole().toUpperCase());
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Collections.singleton(authority));
+        if(user.getRole() != null) {
+            GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getRole().toUpperCase());
+            return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Collections.singleton(authority));
+        }
+        return  null;
     }
 
     public Set<Animal> getUserFavorites(String username) {
@@ -84,5 +87,13 @@ public class UserService implements UserDetailsService {
         System.out.println("LOg " + user);
         System.out.println("Log 2 " + animalRepository.findFavoriteAnimalsByUserId(user.getId()));
         return animalRepository.findFavoriteAnimalsByUserId(user.getId());
+    }
+
+    public void addAnimalToFavorites(String username, Long animalId) {
+        User user = findByUsername(username);
+        Animal animal = animalRepository.findById(animalId)
+                .orElseThrow(() -> new EntityNotFoundException("Animal not found"));
+        user.getFavorites().add(animal);
+        userRepository.save(user);
     }
 }

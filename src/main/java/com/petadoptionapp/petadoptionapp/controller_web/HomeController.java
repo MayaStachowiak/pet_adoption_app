@@ -1,6 +1,8 @@
 package com.petadoptionapp.petadoptionapp.controller_web;
 
+import com.petadoptionapp.petadoptionapp.bean.dao.Animal;
 import com.petadoptionapp.petadoptionapp.bean.dao.User;
+import com.petadoptionapp.petadoptionapp.service.AnimalService;
 import com.petadoptionapp.petadoptionapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -9,17 +11,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
 
     private final UserService userService;
+    private final AnimalService animalService;
 
     @GetMapping("/admin/home")
     public String home(Model model) {
@@ -37,6 +40,8 @@ public class HomeController {
         String formattedDateTime = LocalDateTime.now().format(formatter);
         model.addAttribute("currentDateTime", formattedDateTime);
         model.addAttribute("welcomeMessage", "Adoptuj zwierzaka!");
+        List<Animal> animals = animalService.getAll();
+        model.addAttribute("animals", animals);
         return "home";
     }
 
@@ -57,8 +62,10 @@ public class HomeController {
 
     @PostMapping("/register")
     public String registerUser(User user) {
+        user.setRole("user");
+        user.setPassword(user.getPassword());
         userService.save(user);
-        return "redirect:/login";
+        return "redirect:/user/home";
     }
 
     @GetMapping("/login")
@@ -82,4 +89,11 @@ public class HomeController {
         }
         return "redirect:/default";
     }
+
+//    @GetMapping("animals/showAllAnimalsWithoutLogging")
+//    public String listAnimals(Model model) {
+//        model.addAttribute("animals", animalService.getAll());
+//        return "showAllAnimalsWithoutLogging";
+//    }
+
 }

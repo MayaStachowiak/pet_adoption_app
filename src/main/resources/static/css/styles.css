@@ -140,3 +140,21 @@ ul > li {
 .back-button:hover {
     background-color: #FFCD96;
 }
+
+
+.animal-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.animal-text {
+    margin-left: 20px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+img {
+    width: 400px;
+    height: auto;
+}

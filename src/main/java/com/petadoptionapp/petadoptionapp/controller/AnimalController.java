@@ -38,7 +38,7 @@ public class AnimalController {
         return ResponseEntity.ok(animalDto);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAnimalById(@PathVariable Long id) {
         animalService.deleteById(id);

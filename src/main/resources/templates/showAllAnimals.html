@@ -8,22 +8,43 @@
 <div class="container">
     <h1>Lista zwierząt</h1>
     <ul>
-        <li th:each="animal : ${animals}">
-            <span th:text="${animal.id}"></span> -
-            <span th:text="${animal.name}"></span> -
-            <span th:text="${animal.type}"></span> -
-            <span th:text="${animal.age}"></span> -
-            <span th:text="${animal.color}"></span> -
-            <span th:text="${animal.status}"></span> -
-            <span th:text="${animal.shortDescription}"></span>
-            <span th:text="${animal.image}"></span> -
+        <li th:each="animal : ${animals}" class="animal-item">
+            <img th:src="${animal.image}" width="400"/>
+            <div class="animal-text">
+                <span th:text="${animal.id}"></span>.
+                <span th:text="${animal.name}"></span> <br>
+                <span th:text="${animal.type}"></span> -
+                <span th:text="${animal.age}"></span> -
+                <span th:text="${animal.color}"></span> -
+                <span th:text="${animal.status}"></span> -
+                <span th:text="${animal.shortDescription}"></span>
+            </div>
+            <button onclick="addToFavorites([[${animal.id}]])">DODAJ MNIE DO ULUBIONYCH</button>
         </li>
     </ul>
     <button class="back-button" onclick="goToHome()">Wróć do strony głównej</button>
 </div>
 <script>
     function goToHome() {
-        window.location.href = "/";
+        window.location.href = "/user/home";
+    }
+
+    function addToFavorites(animalId) {
+        fetch(`/user/web/addToFavorites/${animalId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            if(response.ok) {
+                alert("Dodano do ulubionych!");
+            } else {
+                alert("Błąd podczas dodawania do ulubionych.");
+            }
+        }).catch(error => {
+            console.error('Błąd:', error);
+            alert("Błąd podczas dodawania do ulubionych.");
+        });
     }
 </script>
 </body>

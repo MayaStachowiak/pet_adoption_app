@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,9 +28,8 @@ public class AnimalControllerWeb { //todo naprawić przycisk w liście, screen w
     }
 
 
-    @PostMapping("/addAnimal") //todo obsłuzyc ioexception w AdviceContr
-    public String addAnimal(@ModelAttribute("animal") Animal animal, @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
-        animal.setImage(imageFile.getBytes());
+    @PostMapping("/addAnimal")
+    public String addAnimal(@ModelAttribute("animal") Animal animal) {
         animalService.save(animal);
         return "redirect:/web/animals/showAllAnimals";
     }
@@ -54,16 +56,8 @@ public class AnimalControllerWeb { //todo naprawić przycisk w liście, screen w
     }
 
 
-    @PostMapping("/updateAnimal") //todo osbluzyć IOExc
-    public String updateAnimal(@ModelAttribute("animal") Animal animal, @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
-
-        if (!imageFile.isEmpty() && !(imageFile.getSize() < 10485760)) { // 10 MB limit todo
-            System.out.println("Jestem tu");
-            animal.setImage(imageFile.getBytes());
-        } else {
-            System.out.println("Za duży plik");
-        }
-
+    @PostMapping("/updateAnimal")
+    public String updateAnimal(@ModelAttribute("animal") Animal animal) throws IOException {
         animalService.save(animal);
         return "redirect:/web/animals/showAllAnimals";
     }
@@ -87,11 +81,31 @@ public class AnimalControllerWeb { //todo naprawić przycisk w liście, screen w
         return "redirect:/web/animals/showAllAnimals";
     }
 
-    @GetMapping("/image/{id}")
+//    @GetMapping("/image/{id}")
+//    @ResponseBody
+//    public byte[] getImage(@PathVariable Long id) {
+//        Animal animal = animalService.getById(id);
+//        return animal.getImage();
+//    }
+
+    @GetMapping("/checkImages")
     @ResponseBody
-    public byte[] getImage(@PathVariable Long id) {
-        Animal animal = animalService.getById(id);
-        return animal.getImage();
+    public String checkImages() {
+        List<Animal> animals = animalService.getAll();
+        StringBuilder result = new StringBuilder();
+        for (Animal animal : animals) {
+            result.append(animal.getImage()).append(" - ");
+            try {
+                URL url = new URL(animal.getImage());
+                HttpURLConnection huc = (HttpURLConnection) url.openConnection();
+                huc.setRequestMethod("HEAD");
+                int responseCode = huc.getResponseCode();
+                result.append(responseCode).append("<br>");
+            } catch (Exception e) {
+                result.append("Invalid URL").append("<br>");
+            }
+        }
+        return result.toString();
     }
 
 }

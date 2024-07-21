@@ -7,24 +7,32 @@
 <body>
 <div class="container">
     <h1>Moje Ulubione Zwierzęta</h1>
-    <ul>
-        <li th:each="animal : ${favorites}">
-            <span th:text="${animal.id}"></span> -
-            <span th:text="${animal.name}"></span> -
-            <span th:text="${animal.type}"></span> -
-            <span th:text="${animal.age}"></span> -
-            <span th:text="${animal.color}"></span> -
-            <span th:text="${animal.status}"></span> -
-            <span th:text="${animal.shortDescription}"></span>
-            <span th:text="${animal.image}"></span> -
-        </li>
-    </ul>
-    <button class="back-button" onclick="goToHome()">Wróć do strony głównej</button>
-</div>
-<script>
-    function goToHome() {
-        window.location.href = "/";
-    }
-</script>
+    <div class="animal-section">
+        <ul>
+            <div class="animal-text">
+                <li th:each="animal : ${favorites}" class="animal-item">
+                    <img th:src="${animal.image}" width="100"/>
+                    <div class="animal-text">
+                    <span th:text="${animal.id}"></span>.
+                    <span th:text="${animal.name}"></span> <br>
+                    <span th:text="${animal.type}"></span> -
+                    <span th:text="${animal.age}"></span> -
+                    <span th:text="${animal.color}"></span> -
+                    <span th:text="${animal.status}"></span> -
+                    <span th:text="${animal.shortDescription}"></span>
+                    </div>
+                    <br> <br>
+
+                </li>
+                <div>
+                </div>
+        </ul>
+        <button class="back-button" onclick="goToHome()">Wróć do strony głównej</button>
+    </div>
+    <script>
+        function goToHome() {
+            window.location.href = "/user/home";
+        }
+    </script>
 </body>
 </html>

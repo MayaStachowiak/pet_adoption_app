@@ -42,9 +42,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/api/**").permitAll()
-                                .requestMatchers("/", "/home", "/login", "/resources/**", "/register", "/css/**", "/public/**",
+                                .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
+                                .requestMatchers("/web/animals/showAllAnimalsWithoutLogging", "/", "/home", "/login", "/resources/**", "/register", "/css/**", "/public/**",
                         "web/preferences/addPreference", "web/preferences/getPreferenceIdForUpdate",
-                        "web/preferences/getPreferenceIdForDelete", "web/animals/showAllAnimals").permitAll()
+                        "web/preferences/getPreferenceIdForDelete").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/user/**").hasRole("USER")
                                 .anyRequest().authenticated()

@@ -5,76 +5,117 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}"/>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
 
+    <style>
+        body {
+            font-family: 'Lora', sans-serif;
+        }
 
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #f8f8f8;
+        }
+
+        .nav-item {
+            font-size: 2em;
+            font-family: 'Lobster', sans-serif;
+            margin: 0 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .animal-section {
+            margin-top: 20px;
+        }
+
+        .animal-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .animal-text {
+            margin-left: 20px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        img {
+            width: 400px;
+            height: auto;
+        }
+
+        .contact-section {
+            margin-top: 50px;
+            background-color: #f8f8f8;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            margin-bottom: 20px;
+        }
+
+        .contact-section p {
+            font-size: 1.2em;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-    <div class="header">
-        <h1 th:text="${welcomeMessage}">Adoptuj zwierzaka!</h1>
+    <div class="nav-container">
+        <a th:href="@{/register}" class="nav-item">Rejestracja</a>
+        <a th:href="@{/login}" class="nav-item">Logowanie</a>
     </div>
 
-    <div class="grid-container">
-
-        <nav>
-            <a th:href="@{/register}">Rejestracja</a>
-            <br>
-            <br>
-            <a th:href="@{/login}">Logowanie</a>
-        </nav>
-
-
-        <div class="section" id="animalSection">
-            <li>
-                <a href="#" class="section-title" onmouseover="showSubMenu('animalMenu')">Zwierzakowa sekcja</a>
-                <div class="section-content">
-                    <ul id="animalMenu" style="display:none;">
-                        <li><a class="button" th:href="@{web/animals/showAllAnimals}">NASZE MAŁE ZOO!</a></li>
-                        <li><a class="button" th:href="@{web/animals/addAnimal}">DODAJ</a></li>
-                        <li><a class="button" th:href="@{web/animals/getAnimalIdForUpdate}">ZAKTUALIZUJ</a></li>
-                        <li><a class="button" th:href="@{web/animals/getAnimalIdForDelete}">USUŃ</a></li>
-                    </ul>
-                </div>
-            </li>
+    <div class="animal-section">
+        <h1 th:text="${welcomeMessage}">Adoptuj zwierzaka!</h1>
+        <div class="container">
+            <ul>
+                <li th:each="animal : ${animals}" class="animal-item">
+                    <img th:src="${animal.image}" width="400"/>
+                    <div class="animal-text">
+                        <span th:text="${animal.id}"></span>.
+                        <span th:text="${animal.name}"></span> <br>
+                        <span th:text="${animal.type}"></span> -
+                        <span th:text="${animal.age}"></span> lat -
+                        <span th:text="${animal.color}"></span> -
+                        <span th:text="${animal.status}"></span> <br>
+                        <span th:text="${animal.shortDescription}"></span>
+                    </div>
+                </li>
+            </ul>
         </div>
+    </div>
 
-
-        <!--  GPT -->
-
-        <div class="container" />
-<!--             style="position: fixed; bottom: 0; right: 0; width: 300px; height: 400px; border: 1px solid #ccc; background: #fff; padding: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">-->
-            <h3>Chat with GPT</h3>
-            <div id="chat-window" style="height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
-                <div id="chat-log"></div>
-            </div>
-            <input type="text" id="chat-input" placeholder="Type your message here..."
-                   style="width: calc(100% - 60px);">
-            <button id="send-button" style="width: 50px;">Send</button>
-        </div>
-
-
+    <div class="contact-section">
+        <h2>Kontakt do nas</h2>
+        <p>Email: kontakt@przykladowadomena.pl</p>
+        <p>Telefon: 123-456-789</p>
     </div>
 </div>
+
+<!--  GPT -->
+
+<!--        <div class="container" />-->
+<!--&lt;!&ndash;             style="position: fixed; bottom: 0; right: 0; width: 300px; height: 400px; border: 1px solid #ccc; background: #fff; padding: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">&ndash;&gt;-->
+<!--            <h3>Chat with GPT</h3>-->
+<!--            <div id="chat-window" style="height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">-->
+<!--                <div id="chat-log"></div>-->
+<!--            </div>-->
+<!--            <input type="text" id="chat-input" placeholder="Type your message here..."-->
+<!--                   style="width: calc(100% - 60px);">-->
+<!--            <button id="send-button" style="width: 50px;">Send</button>-->
+<!--        </div>-->
+
+
 <p th:text="'Tik tak! Czas leci! Zaadoptuj zwierzaka!: ' + ${currentDateTime}"></p>
 
-<script>
-    function showSubMenu(id) {
-        var subMenu = document.getElementById(id);
-        subMenu.style.display = 'block';
-    }
-
-    $(document).ready(function () {
-        $('#send-button').click(function () {
-            const prompt = $('#chat-input').val();
-            $.post('/chat', {prompt: prompt}, function (response) {
-                $('#chat-log').append('<div>User: ' + prompt + '</div>');
-                $('#chat-log').append('<div>GPT: ' + response + '</div>');
-                $('#chat-input').val('');
-                $('#chat-window').scrollTop($('#chat-window')[0].scrollHeight);
-            });
-        });
-    });
-
-
-</script>
 </body>
 </html>

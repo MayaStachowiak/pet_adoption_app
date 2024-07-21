@@ -7,10 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -28,10 +25,7 @@ public class Animal {
     private String color;
     private String status;
     private String shortDescription;
-
-    @Lob
-    @Column(name = "image")
-    private byte[] image;
+    private String image;
 
     @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL)
     private List<Adoption> adoptions;
@@ -41,5 +35,18 @@ public class Animal {
 
     @ManyToMany(mappedBy = "favorites")
     private Set<User> users = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Animal animal = (Animal) o;
+        return Objects.equals(id, animal.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
 }
