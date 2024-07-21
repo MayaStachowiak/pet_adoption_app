@@ -43,6 +43,7 @@ public class AdoptionController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAdoptionById(@PathVariable Long id) {
         adoptionService.deleteById(id);
     }
