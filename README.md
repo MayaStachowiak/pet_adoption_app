@@ -65,10 +65,20 @@ In the Pet Adoption App, error handling is managed using a Global Exception Hand
 
 ----------------------------------------------------------------------------------------------
 
+![image](https://github.com/user-attachments/assets/6d2b95dc-4c42-4f07-92b8-8c06626f649c)
 
 
-![image](https://github.com/MayaStachowiak/pet_adoption_app/assets/107054955/4cc56b4d-4c4d-4d0b-9423-3d8be278ae9f)
+![image](https://github.com/user-attachments/assets/ea3d80b7-e8ec-47f1-a8f1-c947c46f5905)
 
-![image](https://github.com/MayaStachowiak/pet_adoption_app/assets/107054955/b4bf59af-4be4-4299-9461-28e36ff65454)
+
+![image](https://github.com/user-attachments/assets/e0bd68a4-f25d-499f-88f8-53cd0058c2d5)
+
+
+![image](https://github.com/user-attachments/assets/3fcba1e8-a2b8-4c83-b905-e1fe76b6ee89)
+
+![image](https://github.com/user-attachments/assets/8e7893a1-2ae4-4e6a-9a36-c8f6ed43ab58)
+
+
+
 
 
